@@ -23,6 +23,33 @@
   window.addEventListener("scroll", onScroll, { passive: true });
   onScroll();
 
+  /* ---------- Контекст подбора сохраняется в форме ---------- */
+  const serviceSelect = document.getElementById("service");
+  const doorPurpose = document.getElementById("door-purpose");
+  const selectionNote = document.getElementById("door-selection");
+  const clearSelection = () => {
+    if (doorPurpose) doorPurpose.value = "";
+    if (selectionNote) {
+      selectionNote.hidden = true;
+      selectionNote.textContent = "";
+    }
+  };
+
+  document.querySelectorAll('[data-service], .service[href="#lead"]').forEach((link) => {
+    link.addEventListener("click", () => {
+      if (!form || !serviceSelect) return;
+      if (form.hidden && resetButton) resetButton.click();
+      serviceSelect.value = link.dataset.service || link.querySelector("h3").textContent.trim();
+      clearSelection();
+      if (link.dataset.door && doorPurpose && selectionNote) {
+        doorPurpose.value = link.dataset.door;
+        selectionNote.textContent = `Подбираем входную дверь: ${link.dataset.door.toLowerCase()}`;
+        selectionNote.hidden = false;
+      }
+    });
+  });
+  if (serviceSelect) serviceSelect.addEventListener("change", clearSelection);
+
   /* ---------- Мобильное меню ---------- */
   const closeNav = () => {
     if (!nav || !burger) return;
@@ -167,6 +194,7 @@
         success.hidden = true;
         form.hidden = false;
         form.reset();
+        clearSelection();
         setFieldError("name", "");
         setFieldError("phone", "");
         setFieldError("consent", "");

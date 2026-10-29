@@ -400,16 +400,81 @@ select {
   transform: translateY(-8.5px) rotate(-45deg);
 }
 
-/* ------------------------- Hero ------------------------- */
+/* ------------------------- Hero: двери ------------------------- */
+.door-hero {
+  position: relative;
+  overflow: hidden;
+  background: var(--paper-2);
+  border-bottom: 1px solid var(--line);
+}
+
+.door-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 0 42%;
+  background: linear-gradient(90deg, var(--paper-2), rgba(241, 236, 228, 0.18) 28%), radial-gradient(circle at 70% 35%, rgba(138, 0, 92, 0.08), transparent 45%);
+}
+
+.door-hero__inner {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 0.92fr) minmax(390px, 1.08fr);
+  align-items: center;
+  min-height: min(720px, calc(100vh - var(--header-h) - 40px));
+  gap: clamp(32px, 5vw, 86px);
+}
+
+.door-hero__copy { position: relative; z-index: 1; padding: 64px 0; }
+.door-hero h1 {
+  max-width: 9ch;
+  margin-top: 18px;
+  font-family: var(--font-display);
+  font-size: clamp(3rem, 5.5vw, 5.8rem);
+  font-weight: 400;
+  line-height: 0.99;
+  letter-spacing: -0.055em;
+}
+.door-hero h1 em { display: block; color: var(--burgundy); font-style: normal; }
+.door-hero__lead { max-width: 43ch; margin-top: 25px; font-size: 17px; line-height: 1.65; color: var(--ink-soft); }
+.door-hero__note { margin-top: 24px; font-size: 12px; color: var(--muted); }
+.door-hero__visual { position: relative; align-self: stretch; min-height: 580px; margin: 0; }
+.door-hero__visual img { width: 100%; height: 100%; object-fit: contain; object-position: center; mix-blend-mode: multiply; filter: contrast(1.02); }
+.door-hero__label { position: absolute; top: 34px; left: 0; right: 0; z-index: 1; display: flex; justify-content: space-between; font-size: 10px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+.door-hero__visual figcaption { position: absolute; bottom: 28px; left: 0; right: 0; display: flex; justify-content: space-between; gap: 16px; font-size: 11px; color: var(--ink-soft); }
+.door-hero__visual figcaption span { color: var(--muted); }
+
+.door-selection { background: var(--surface); }
+.door-options { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+.door-option { display: flex; flex-direction: column; min-height: 440px; padding: 28px; background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius); }
+.door-option--dark { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+.door-option__number { font-size: 10px; font-weight: 600; letter-spacing: .14em; color: var(--brass); text-transform: uppercase; }
+.door-option .icon { margin-top: 38px; color: var(--burgundy); }
+.door-option--dark .icon { color: var(--blush); }
+.door-option h3 { margin-top: 18px; font-family: var(--font-display); font-size: 24px; font-weight: 400; line-height: 1.15; }
+.door-option p { margin-top: 12px; font-size: 13px; line-height: 1.6; color: var(--muted); }
+.door-option--dark p { color: rgba(248, 245, 240, .68); }
+.door-option ul { display: grid; gap: 7px; margin: 20px 0 26px; padding-top: 18px; border-top: 1px solid var(--line); font-size: 12px; color: var(--ink-soft); }
+.door-option--dark ul { border-color: rgba(248, 245, 240, .2); color: rgba(248, 245, 240, .78); }
+.door-option li::before { content: "—"; margin-right: 8px; color: var(--burgundy); }
+.door-option--dark li::before { color: var(--blush); }
+.door-option .btn { align-self: flex-start; margin-top: auto; }
+.door-selection__note { margin-top: 18px; font-size: 11px; color: var(--muted); }
+.section--additional { padding-top: 80px; }
+.section--additional .services { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.door-process__action { margin-top: 32px; }
+.door-option--dark .door-option__number { color: #d8bd90; }
+.form__selection { margin: -8px 0 18px; padding: 10px 12px; border-left: 2px solid var(--burgundy); background: var(--burgundy-soft); font-size: 12px; color: var(--burgundy-deep); }
+
+/* ------------------------- Hero: legacy atmospheric styles ------------------------- */
 .hero {
   position: relative;
   isolation: isolate;
   display: flex;
   align-items: flex-end;
-  min-height: clamp(520px, 74vh, 700px);
+  min-height: clamp(620px, 82vh, 860px);
   padding: clamp(48px, 6vw, 84px) 0;
   overflow: hidden;
-  background: #171014;
+  background: #10080d;
   color: var(--paper);
 }
 
@@ -417,13 +482,17 @@ select {
   position: absolute;
   inset: 0;
   z-index: -2;
+  opacity: 0.74;
+  transform: scale(1.04);
+  animation: hero-image-drift 18s ease-in-out infinite alternate;
 }
 
 .hero__bg img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: 72% center;
+  object-position: 78% center;
+  filter: saturate(0.72) contrast(1.12) brightness(0.8);
 }
 
 .hero::after {
@@ -432,9 +501,22 @@ select {
   inset: 0;
   z-index: -1;
   background:
-    linear-gradient(90deg, rgba(15, 9, 13, 0.94) 0%, rgba(15, 9, 13, 0.76) 43%, rgba(15, 9, 13, 0.12) 78%),
-    linear-gradient(to top, rgba(15, 9, 13, 0.72), rgba(15, 9, 13, 0) 58%);
+    linear-gradient(90deg, rgba(11, 5, 10, 0.98) 0%, rgba(18, 5, 15, 0.86) 42%, rgba(10, 5, 10, 0.25) 83%),
+    linear-gradient(to top, rgba(9, 5, 9, 0.9), rgba(9, 5, 9, 0) 66%);
 }
+
+.hero__atmosphere { position: absolute; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; }
+.hero__orb { position: absolute; border-radius: 50%; filter: blur(2px); mix-blend-mode: screen; opacity: 0.46; }
+.hero__orb--one { width: 42vw; height: 42vw; top: -18vw; right: 10%; background: radial-gradient(circle, rgba(181, 0, 101, 0.72), transparent 68%); animation: orb-float 14s ease-in-out infinite alternate; }
+.hero__orb--two { width: 30vw; height: 30vw; bottom: -18vw; left: 18%; background: radial-gradient(circle, rgba(126, 0, 78, 0.7), transparent 68%); animation: orb-float 17s ease-in-out -5s infinite alternate-reverse; }
+.hero__smoke { position: absolute; width: 58vw; height: 25vw; border-radius: 50%; filter: blur(44px); opacity: 0.24; background: rgba(241, 205, 223, 0.48); animation: smoke-float 22s ease-in-out infinite alternate; }
+.hero__smoke--one { left: 26%; bottom: 8%; }
+.hero__smoke--two { right: -15%; top: 26%; opacity: 0.17; animation-delay: -9s; }
+.hero__grid { position: absolute; inset: 0; opacity: 0.16; background-image: linear-gradient(rgba(255,255,255,.16) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.16) 1px, transparent 1px); background-size: 72px 72px; mask-image: linear-gradient(90deg, #000, transparent 70%); }
+
+@keyframes hero-image-drift { to { transform: scale(1.1) translate3d(-1.2%, -0.8%, 0); } }
+@keyframes orb-float { to { transform: translate3d(-7%, 10%, 0) scale(1.12); } }
+@keyframes smoke-float { to { transform: translate3d(18%, -13%, 0) scale(1.35); opacity: 0.34; } }
 
 .hero__inner {
   position: relative;
@@ -464,15 +546,16 @@ select {
   margin: 20px 0 0;
   font-family: var(--font-body);
   font-weight: 700;
-  font-size: clamp(2.5rem, 5.1vw, 4.7rem);
-  line-height: 0.98;
-  letter-spacing: -0.055em;
+  font-size: clamp(3rem, 6.2vw, 6.1rem);
+  line-height: 0.91;
+  letter-spacing: -0.07em;
 }
 
 .hero__title span {
   display: block;
   margin-top: 8px;
-  color: var(--blush);
+  color: #e6a1cb;
+  text-shadow: 0 0 40px rgba(178, 0, 99, 0.42);
 }
 
 .hero__lead {
@@ -531,11 +614,12 @@ select {
 .hero__card {
   min-width: 224px;
   padding: 20px 24px;
-  background: rgba(248, 245, 240, 0.97);
-  border: 1px solid rgba(255, 255, 255, 0.35);
-  border-radius: var(--radius);
+  background: rgba(25, 13, 22, 0.72);
+  border: 1px solid rgba(245, 183, 219, 0.32);
+  border-radius: 14px;
+  backdrop-filter: blur(14px);
   box-shadow: var(--shadow-md);
-  color: var(--ink);
+  color: var(--paper);
 }
 
 .hero__card-time {
@@ -543,14 +627,14 @@ select {
   font-family: var(--font-display);
   font-size: 32px;
   line-height: 1;
-  color: var(--burgundy);
+  color: var(--blush);
 }
 
 .hero__card p {
   margin-top: 7px;
   font-size: 12.5px;
   line-height: 1.45;
-  color: var(--ink-soft);
+  color: rgba(248, 245, 240, 0.74);
 }
 
 /* ------------------------- Преимущества ------------------------- */
@@ -1021,6 +1105,8 @@ select {
 }
 
 .consent a {
+  display: inline-block;
+  min-height: 24px;
   color: var(--ink);
   text-decoration: underline;
   text-underline-offset: 2px;
@@ -1424,6 +1510,13 @@ a.contact-card__value:hover {
     padding: 44px 0 48px;
   }
 
+  .door-hero__inner { grid-template-columns: 1fr; min-height: 0; gap: 0; }
+  .door-hero__copy { padding: 54px 0 20px; }
+  .door-hero h1 { max-width: 12ch; }
+  .door-hero__visual { min-height: 440px; }
+  .door-options { grid-template-columns: 1fr; }
+  .door-option { min-height: 0; }
+
   .hero__inner {
     flex-direction: column;
     align-items: flex-start;
@@ -1549,13 +1642,21 @@ a.contact-card__value:hover {
   }
 
   .hero {
-    min-height: 720px;
+    min-height: 780px;
     padding: 34px 0 32px;
     align-items: flex-end;
   }
 
+  .door-hero::before { inset: 38% 0 0; }
+  .door-hero__copy { padding-top: 42px; }
+  .door-hero h1 { font-size: clamp(2.8rem, 13vw, 4.2rem); }
+  .door-hero__lead { font-size: 15px; }
+  .door-hero__visual { min-height: 360px; }
+  .door-hero__label { top: 10px; }
+  .door-hero__visual figcaption { bottom: 12px; flex-direction: column; gap: 4px; }
+
   .hero__bg img {
-    object-position: 64% center;
+    object-position: 68% center;
   }
 
   .hero::after {
@@ -1565,7 +1666,7 @@ a.contact-card__value:hover {
   }
 
   .hero__title {
-    font-size: clamp(2.5rem, 10.5vw, 3.25rem);
+    font-size: clamp(2.85rem, 12vw, 3.65rem);
     line-height: 0.96;
   }
 
@@ -1573,6 +1674,11 @@ a.contact-card__value:hover {
     max-width: 30ch;
     font-size: 16px;
   }
+
+  .hero__orb--one { width: 88vw; height: 88vw; top: -35vw; right: -30vw; }
+  .hero__orb--two { width: 70vw; height: 70vw; bottom: -35vw; left: -26vw; }
+  .hero__smoke { width: 100vw; height: 48vw; filter: blur(30px); }
+  .hero__grid { background-size: 52px 52px; opacity: 0.1; }
 
   .hero__card {
     order: 2;
@@ -1660,6 +1766,13 @@ a.contact-card__value:hover {
 }
 
 @media (max-width: 560px) {
+  .benefits__grid { grid-template-columns: 1fr; }
+  .btn { white-space: normal; text-align: center; }
+  .lead > *, .door-hero__inner > * { min-width: 0; }
+  .section--additional .services { grid-template-columns: 1fr; }
+  .door-option { padding: 24px 20px; }
+  .door-option .btn { padding-inline: 14px; font-size: 11px; }
+  .door-process__action .btn { width: 100%; padding-inline: 12px; font-size: 10.5px; }
   .services {
     grid-template-columns: 1fr;
   }
